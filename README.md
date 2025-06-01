@@ -1,18 +1,14 @@
-Este projeto foi desenvolvido para resolver um problema comum em lojas de roupas: a falta de controle preciso sobre o estoque, especialmente na diferenciação entre mercadorias fisicamente disponíveis e aquelas enviadas em condicional para clientes ou revendedores.
+Este projeto foi desenvolvido para resolver um problema comum em lojas de roupas: a falta de controle preciso sobre o estoque, especialmente na divisão entre mercadorias fisicamente disponíveis e enviadas condicionalmente para clientes ou revendedores.
 
-A solução proposta é um sistema web que une controle interno com uma vitrine digital, trazendo mais profissionalismo, organização e facilidade na tomada de decisões. A plataforma permite:
+A solução proposta é um sistema web simples, focado no controle interno e na exibição dos produtos em uma vitrine digital, promovendo mais organização, profissionalismo e suporte à tomada de decisões.
 
-Registrar e acompanhar o estoque físico e o estoque em condicional separadamente;
+O site foi desenvolvido com as seguintes tecnologias:
 
-Emitir relatórios e alertas automáticos de movimentações;
-
-Exibir os produtos em uma interface amigável para clientes e vendedores;
-
-Reduzir perdas e aumentar o controle da loja
-
-Estrutura do Site
-Página Principal da Loja
-Exibe todos os produtos disponíveis com:
+HTML5 e CSS3 – estrutura e estilo das páginas;
+JavaScript – funcionalidades básicas e interações do site;
+Tailwind CSS – estilização moderna e responsiva;
+Git e GitHub – controle de versão e hospedagem do código;
+Estrutura do site.
 
 Nome
 Imagem destacada
