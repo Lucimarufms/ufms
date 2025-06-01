@@ -5,12 +5,14 @@ CREATE TABLE produto (
     preco NUMERIC(10,2),
     estoque INTEGER
 );
+
 CREATE TABLE pedidos (
     id_pedido SERIAL PRIMARY KEY,
     id_produto INTEGER REFERENCES produto(id_produto),
     quantidade INTEGER,
     data_pedido DATE
 );
+
 CREATE TABLE estoque (
     id_estoque SERIAL PRIMARY KEY,
     id_produto INTEGER REFERENCES produto(id_produto),
@@ -18,6 +20,7 @@ CREATE TABLE estoque (
     quantidade INTEGER,
     data_movimentacao DATE
 );
+
 CREATE TABLE condicional (
     id_condicional SERIAL PRIMARY KEY,
     id_produto INTEGER REFERENCES produto(id_produto),
@@ -27,19 +30,57 @@ CREATE TABLE condicional (
     status VARCHAR(20) -- 'pendente', 'devolvido', 'vendido'
 );
 
+
 INSERT INTO produto (nome, descricao, preco, estoque) VALUES
 ('Vestido Floral', 'Vestido de verão com estampa floral.', 129.90, 10),
 ('Camisa Social Masculina', 'Camisa manga longa branca.', 89.90, 25),
 ('Calça Jeans Feminina', 'Calça jeans cintura alta.', 149.00, 15);
+
 INSERT INTO pedidos (id_produto, quantidade, data_pedido) VALUES
 (1, 2, '2025-05-01'),
 (2, 1, '2025-05-02'),
 (3, 3, '2025-05-03');
+
 INSERT INTO estoque (id_produto, tipo_movimentacao, quantidade, data_movimentacao) VALUES
 (1, 'entrada', 10, '2025-04-28'),
 (2, 'saida', 5, '2025-05-01'),
 (3, 'entrada', 15, '2025-05-02');
+
 INSERT INTO condicional (id_produto, nome_cliente, quantidade, data_envio, status) VALUES
 (1, 'Maria Souza', 2, '2025-05-03', 'pendente'),
 (2, 'Loja XYZ', 5, '2025-05-04', 'vendido'),
 (3, 'João Oliveira', 1, '2025-05-05', 'devolvido');
+
+CREATE OR REPLACE FUNCTION adicionar_ou_atualizar_produto(
+    p_nome VARCHAR,
+    p_descricao TEXT,
+    p_preco NUMERIC,
+    p_quantidade INTEGER
+) RETURNS VOID AS $$
+DECLARE
+    v_id_produto INTEGER;
+BEGIN
+   
+    SELECT id_produto INTO v_id_produto FROM produto WHERE nome = p_nome;
+
+    IF v_id_produto IS NOT NULL THEN
+        -- Produto existe: atualiza o estoque somando a quantidade e atualiza dados
+        UPDATE produto
+        SET estoque = estoque + p_quantidade,
+            descricao = p_descricao,
+            preco = p_preco
+        WHERE id_produto = v_id_produto;
+        INSERT INTO estoque (id_produto, tipo_movimentacao, quantidade, data_movimentacao)
+        VALUES (v_id_produto, 'entrada', p_quantidade, CURRENT_DATE);
+
+    ELSE
+      
+        INSERT INTO produto (nome, descricao, preco, estoque)
+        VALUES (p_nome, p_descricao, p_preco, p_quantidade)
+        RETURNING id_produto INTO v_id_produto;
+
+        INSERT INTO estoque (id_produto, tipo_movimentacao, quantidade, data_movimentacao)
+        VALUES (v_id_produto, 'entrada', p_quantidade, CURRENT_DATE);
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
