@@ -1,0 +1,30 @@
+# Controle de Estoque para Loja de Roupas
+
+Este projeto contém a modelagem do banco de dados para um sistema de controle de estoque de uma loja de roupas. O objetivo é melhorar o controle entre o estoque físico disponível e as mercadorias enviadas em consignação (condicional) para clientes ou revendedores.
+
+## Estrutura do Banco de Dados
+
+- Tabela `produto`: contém dados dos produtos e o estoque físico disponível.
+- Tabela `pedidos`: registra vendas realizadas.
+- Tabela `estoque`: registra movimentações de entrada e saída do estoque.
+- Tabela `condicional`: controla os produtos enviados em consignação com status como pendente, devolvido ou vendido.
+- Triggers e funções para atualizar automaticamente o estoque ao inserir pedidos ou movimentações condicionais.
+
+## Como usar
+
+1. Instale o PostgreSQL em sua máquina.
+2. Crie um banco de dados (exemplo: `loja_roupas`).
+3. Execute o script SQL `modelagem_banco.sql` para criar as tabelas, funções e triggers.
+4. Use as tabelas para registrar produtos, pedidos e movimentações.
+
+## Como contribuir
+
+1. Faça um fork do projeto.
+2. Crie uma branch com sua feature (`git checkout -b minha-feature`).
+3. Faça commits claros e descritivos.
+4. Envie para seu fork (`git push origin minha-feature`).
+5. Abra um Pull Request para revisão.
+
+## Contato
+
+Qualquer dúvida ou sugestão estamos a disposição
