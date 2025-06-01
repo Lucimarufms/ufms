@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estilo Chic - Loja de Roupas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Cabeçalho -->
+  <header class="bg-white shadow-md p-6 text-center">
+    <h1 class="text-4xl font-bold text-indigo-600">Estilo Chic</h1>
+    <p class="text-gray-600 mt-2">Moda acessível e cheia de estilo</p>
+  </header>
+
+  <!-- Banner -->
+  <section class="mt-6">
+    <img src="Imagens/Banner.jpg" alt="Moda" class="w-full h-65 object-cover">
+  </section>
+
+  <!-- Galeria de Produtos -->
+  <section class="p-8 max-w-6xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6 text-center">Nossos Produtos</h2>
+    <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+
+      <!-- Produto 1 -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition">
+        <img src="imagens/produto1.jpg" alt="Produto 1" class="rounded-t-lg w-full h-60 object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-lg">Produto 1</h3>
+          <p class="text-gray-600 text-sm">Descrição breve do produto.</p>
+          <a href="detalhes-produto.html?produto=produto1.jpg" class="text-indigo-600 hover:underline">Ver Detalhes</a>
+        </div>
+      </div>
+
+      <!-- Produto 2 -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition">
+        <img src="imagens/produto2.jpg" alt="Produto 2" class="rounded-t-lg w-full h-60 object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-lg">Produto 2</h3>
+          <p class="text-gray-600 text-sm">Descrição breve do produto.</p>
+          <a href="detalhes-produto.html?produto=produto2" class="text-indigo-600 hover:underline">Ver Detalhes</a>
+        </div>
+      </div>
+
+      <!-- Produto 3 -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition">
+        <img src="imagens/produto3.jpg" alt="Produto 3" class="rounded-t-lg w-full h-60 object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-lg">Produto 3</h3>
+          <p class="text-gray-600 text-sm">Descrição breve do produto.</p>
+          <a href="detalhes-produto.html?produto=produto3" class="text-indigo-600 hover:underline">Ver Detalhes</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="bg-white text-center p-4 mt-10 text-sm text-gray-500">
+    © 2025 Estilo Chic. Todos os direitos reservados.
+  </footer>
+
+</body>
+</html>

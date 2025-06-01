@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalhes do Produto - Estilo Chic</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function mostrarImagem(imagemProduto) {
+      // Atualiza o src da imagem principal com a imagem correspondente ao produto selecionado
+      document.getElementById("imagemProduto").src = imagemProduto;
+    }
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Cabeçalho -->
+  <header class="bg-white shadow-md p-6 text-center">
+    <h1 class="text-4xl font-bold text-indigo-600">Estilo Chic</h1>
+    <p class="text-gray-600 mt-2">Moda acessível e cheia de estilo</p>
+  </header>
+
+  <!-- Detalhes do Produto -->
+  <section class="p-8 max-w-7xl mx-auto bg-white shadow-md rounded-lg mt-8">
+    <div class="grid md:grid-cols-2 gap-12">
+
+      <!-- Imagem do Produto -->
+      <div class="flex justify-center">
+        <img id="imagemProduto" src="imagens/produto2.jpg" alt="Produto 1" class="w-full h-auto rounded-lg shadow-lg">
+      </div>
+
+      <!-- Informações do Produto -->
+      <div>
+        <h2 class="text-3xl font-semibold mb-4">Produto 1</h2>
+        <p class="text-gray-600 mb-6">Descrição detalhada do produto, materiais, benefícios e dicas de uso. Este produto é perfeito para ocasiões especiais e garante conforto e elegância. Feito com materiais de alta qualidade para durabilidade e estilo.</p>
+
+        <div class="mb-6">
+          <span class="text-lg font-semibold text-indigo-600">Preço: R$ 100,00</span>
+        </div>
+
+        <div class="mb-6">
+          <span class="text-lg font-semibold">Quantidade em Estoque: 20 unidades</span>
+        </div>
+
+        <div class="text-center mt-8">
+          <button class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Galeria de Produtos -->
+  <section class="p-8 max-w-6xl mx-auto bg-white shadow-md rounded-lg mt-12">
+    <h2 class="text-2xl font-semibold mb-6 text-center">Escolha um Produto</h2>
+    <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+
+      <!-- Produto 1 -->
+      <div class="cursor-pointer bg-white rounded-lg shadow hover:shadow-lg transition" onclick="mostrarImagem('imagens/produto1.jpg')">
+        <img src="imagens/produto1.jpg" alt="Produto 1" class="rounded-t-lg w-full h-60 object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-lg">Produto 1</h3>
+        </div>
+      </div>
+
+      <!-- Produto 2 -->
+      <div class="cursor-pointer bg-white rounded-lg shadow hover:shadow-lg transition" onclick="mostrarImagem('imagens/produto2.jpg')">
+        <img src="imagens/produto2.jpg" alt="Produto 2" class="rounded-t-lg w-full h-60 object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-lg">Produto 2</h3>
+        </div>
+      </div>
+
+      <!-- Produto 3 -->
+      <div class="cursor-pointer bg-white rounded-lg shadow hover:shadow-lg transition" onclick="mostrarImagem('imagens/produto3.jpg')">
+        <img src="imagens/produto3.jpg" alt="Produto 3" class="rounded-t-lg w-full h-60 object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-lg">Produto 3</h3>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="bg-white text-center p-4 mt-10 text-sm text-gray-500">
+    © 2025 Estilo Chic. Todos os direitos reservados.
+  </footer>
+
+</body>
+</html>
