@@ -1,0 +1,87 @@
+# Estilo Chic - Sistema de Controle de Estoque para Loja de Roupas
+
+Este é um sistema web básico para gerenciamento de estoque de uma loja de roupas, utilizando PHP para o frontend e PostgreSQL para o banco de dados. O controle de estoque é automatizado através de **triggers no banco de dados**, garantindo a integridade e a consistência dos dados em todas as movimentações.
+
+## Visão Geral do Projeto
+
+O sistema "Estilo Chic" oferece funcionalidades essenciais para o controle de mercadorias, vendas e consignações. Ele é dividido em três principais interfaces PHP que interagem com um banco de dados PostgreSQL estruturado para gerenciar produtos, pedidos, movimentações de estoque e consignações de forma eficiente.
+
+### Funcionalidades Principais
+
+* **Cadastro e Abastecimento de Produtos:** Permite adicionar novos produtos ao catálogo e aumentar o estoque de itens existentes.
+* **Gerenciamento de Vendas:** Registra vendas de produtos, descontando automaticamente do estoque disponível.
+* **Controle de Consignações:** Permite enviar produtos para clientes em regime de consignação (`pendente`), e posteriormente registrar a venda ou devolução, com ajuste automático do estoque.
+* **Histórico de Movimentações:** Mantém um registro detalhado de todas as entradas e saídas de estoque.
+* **Atualização Automática de Estoque:** Através de funções e triggers no PostgreSQL, o campo `estoque` na tabela `produto` é sempre sincronizado com as movimentações, reduzindo erros manuais.
+
+### Estrutura do Banco de Dados (PostgreSQL)
+
+O banco de dados é composto pelas seguintes tabelas:
+
+* **`produto`**: Contém informações detalhadas dos produtos, incluindo o `estoque` físico disponível.
+    * `id_produto` (SERIAL PRIMARY KEY)
+    * `nome` (VARCHAR, UNIQUE, NOT NULL)
+    * `descricao` (TEXT)
+    * `preco` (NUMERIC)
+    * `estoque` (INTEGER)
+    * `imagem` (VARCHAR)
+* **`pedidos`**: Registra as vendas realizadas.
+    * `id_pedido` (SERIAL PRIMARY KEY)
+    * `id_produto` (INTEGER, REFERENCES `produto`)
+    * `quantidade` (INTEGER)
+    * `data_pedido` (DATE)
+* **`estoque`**: Registra todas as movimentações de entrada (reposições) e saída (vendas, consignações, devoluções de consignação).
+    * `id_estoque` (SERIAL PRIMARY KEY)
+    * `id_produto` (INTEGER, REFERENCES `produto`)
+    * `tipo_movimentacao` (VARCHAR - 'entrada' ou 'saida')
+    * `quantidade` (INTEGER)
+    * `data_movimentacao` (DATE)
+    * `observacao` (TEXT)
+* **`condicional`**: Controla os produtos enviados em consignação para clientes.
+    * `id_condicional` (SERIAL PRIMARY KEY)
+    * `id_produto` (INTEGER, REFERENCES `produto`)
+    * `nome_cliente` (VARCHAR)
+    * `quantidade` (INTEGER)
+    * `data_envio` (DATE)
+    * `status` (VARCHAR - 'pendente', 'devolvido' ou 'vendido')
+
+### Triggers e Funções (SQL)
+
+As seguintes lógicas de automação são implementadas diretamente no banco de dados para garantir a integridade do estoque:
+
+* **`trg_atualizar_estoque_produto_estoque`**: Atualiza o campo `estoque` na tabela `produto` toda vez que uma movimentação é inserida, atualizada ou deletada na tabela `estoque`.
+* **`trg_registrar_saida_pedido`**: Insere uma movimentação do tipo 'saida' na tabela `estoque` quando um novo registro é adicionado à tabela `pedidos` (ou seja, uma venda).
+* **`trg_registrar_saida_condicional_envio`**: Insere uma movimentação do tipo 'saida' na tabela `estoque` quando um produto é enviado em consignação (`status = 'pendente'`).
+* **`trg_ajustar_estoque_condicional_status`**: Ajusta o estoque e registra movimentações adicionais na tabela `estoque` quando o `status` de uma consignação é alterado (ex: de 'pendente' para 'devolvido', gerando uma entrada).
+
+## Pré-requisitos
+
+Para rodar este projeto, você precisará ter instalado:
+
+* **Servidor Web:** Apache ou Nginx (comumente incluídos em pacotes como XAMPP, WAMP, MAMP).
+* **PHP:** Versão 7.4 ou superior.
+* **PostgreSQL:** Banco de dados relacional.
+* **Extensão PDO para PostgreSQL:** A extensão `pdo_pgsql` deve estar habilitada no seu `php.ini`.
+* **Um editor de código:** (Ex: VS Code, Sublime Text, PHPStorm).
+
+## Configuração do Ambiente e Instalação
+
+Siga os passos abaixo para configurar e rodar o projeto em sua máquina local.
+
+### 1. Configuração do Banco de Dados PostgreSQL
+
+1.  **Instale o PostgreSQL:** Se você ainda não tem o PostgreSQL instalado, baixe o instalador oficial para seu sistema operacional em [https://www.postgresql.org/download/](https://www.postgresql.org/download/).
+
+2.  **Crie o Banco de Dados:**
+    * Abra o terminal do PostgreSQL (`psql`) ou uma ferramenta gráfica como `pgAdmin`.
+    * Crie um novo banco de dados chamado `estilochic`:
+        ```sql
+        CREATE DATABASE estilochic;
+        ```
+    * **Importante para Conexão sem Senha (Apenas para Desenvolvimento Local):**
+        Se você planeja conectar sem senha para fins de desenvolvimento, o usuário padrão `postgres` geralmente não tem senha. Verifique seu arquivo `pg_hba.conf` (localizado no diretório de dados do PostgreSQL, ex: `/etc/postgresql/<versao>/main/` no Linux ou `C:\Program Files\PostgreSQL\<versao>\data\` no Windows).
+        Procure por linhas que se refiram a `127.0.0.1/32` (para IPv4) ou `::1/128` (para IPv6) e altere o método de autenticação para `trust` ou `ident` para o usuário `postgres` (ou para `all` os usuários, **mas isso é menos seguro**).
+        Exemplo (mude `scram-sha-256` para `trust`):
+        ```
+        # TYPE  DATABASE        USER            ADDRESS                 METHOD
+        host    all             postgres        127.0.0
